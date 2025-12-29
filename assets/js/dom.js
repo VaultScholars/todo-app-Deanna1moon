@@ -2,7 +2,7 @@
 // In this file, students will write the functions that update the DOM.
 
 
-// This function :
+// This function does :
 // - Clear the current task list
 // - Loop through the tasks array
 // - Create an <li> for each task using createTaskElement()
@@ -41,11 +41,11 @@ function createTaskElement(task) {
   li.classList.add("task-item");
   li.setAttribute("data-id", task.id);
 
-  // Left container
+  
   const leftDiv = document.createElement("div");
   leftDiv.classList.add("task-item-left");
 
-  // Checkbox
+ 
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.classList.add("task-checkbox");
@@ -81,7 +81,7 @@ function createTaskElement(task) {
 // This function:
 // - Reset the form
 // - Put focus back on the task title input
-function clearTaskForm(form) {
+function clearTaskForm(form){
 
   form.reset();
 
