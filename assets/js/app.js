@@ -1,3 +1,4 @@
+
 // app.js
 // This file controls what the app does.
 // Students will fill in the logic for adding, updating, and deleting tasks.
@@ -19,6 +20,16 @@ document.addEventListener("DOMContentLoaded", () => {
   // - Show tasks on the page
   // TODO: Load tasks and render them
 
+tasks = loadTasks();
+
+if (tasks.length > 0) {
+  nextTaskId = Math.max(...tasks.map(task => task.id)) + 1;
+}
+
+renderTasks(tasks, taskList, emptyState);
+
+  
+
 
 
   // When the user submits the form to add a task:
@@ -34,6 +45,31 @@ document.addEventListener("DOMContentLoaded", () => {
     // - Update the page to show the new task
     // - Clear the form
     // TODO: Add a new task
+
+const titleInput = document.getElementById("task-title");
+const categoryInput = document.getElementById("task-category");
+const dueDateInput = document.getElementById("task-due-date");
+
+const title = titleInput.value;
+const category = categoryInput.value;
+const dueDate = dueDateInput.value;
+
+if (title === "") return;
+
+const newTask = {
+  id: nextTaskId++,
+  title: title,
+  category: category,
+  dueDate: dueDate,
+  completed: false
+};
+
+tasks.push(newTask);
+saveTasks(tasks);
+renderTasks(tasks, taskList, emptyState);
+
+form.reset();
+
   });
 
 
@@ -54,6 +90,24 @@ document.addEventListener("DOMContentLoaded", () => {
       // - Save updated tasks
       // - Update the page
       // TODO: Toggle completed state
+
+          let task = null;
+
+          for (let i = 0; i < tasks.length; i++) {
+            if (tasks[i].id === taskId) {
+              task = tasks[i];
+              break;
+            }
+          }
+
+          if (task === null) return;
+
+        task.completed = !task.completed;
+
+        saveTasks(tasks);
+        renderTasks(tasks, taskList, emptyState);
+
+
       return;
     }
 
@@ -64,7 +118,17 @@ document.addEventListener("DOMContentLoaded", () => {
       // - Save updated tasks
       // - Update the page
       // TODO: Delete the task
-      return;
+
+        for (let i = 0; i < tasks.length; i++) {
+          if (tasks[i].id === taskId) {
+            tasks.splice(i, 1);// at position i remove 1 item
+            break;
+          }
+        }
+
+        saveTasks(tasks);
+        renderTasks(tasks, taskList, emptyState);
+
     }
   });
 });
